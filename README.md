@@ -1,5 +1,5 @@
 # memory-tr-free ![Python3.6|3.7 package](https://github.com/ffreemt/mymemory-tr-free/workflows/Python3.6%7C3.7%20package/badge.svg)[![codecov](https://codecov.io/gh/ffreemt/memory-tr-free/branch/master/graph/badge.svg)](https://codecov.io/gh/ffreemt/memory-tr-free)
-translate for free with async and proxy support
+translate for free with proxy support
 
 ### Installation
 Not available yet
@@ -14,11 +14,28 @@ python -c "import mymemory_tr; print(mymemory_tr.__version__)"
 ### Usage
 
 ```
-import asyncio
-from mymemory_tr import mymemory_tr
+from mymemory_tr import MymemoryTr
 
-asyncio.get_event_loop().run_until_complete(mymemory_tr('test this and that'))
+mymemory_tr = MymemoryTr().translate
+
+mymemory_tr('test this and that'))
 # '测试这个和那个'
+
+# use a proxy per instance
+proxy = 'http://127.0.0.1:8888'
+mymemory_tr = MymemoryTr(proxy=proxy).translate
+mymemory_tr('test this and that'))
+
+# use a proxy per request
+mymemory_tr = MymemoryTr().translate
+proxy = 'http://127.0.0.1:8888'
+mymemory_tr('test this and that', proxy=proxy)
+
+# source and destination can be identifid by RFC3066 (ISO 639-1)
+mymemory_tr = MymemoryTr(to_lang='de').translate
+mymemory_tr('Test this and that and more')
+# 'Testen Sie dieses und das und mehr'
+
 ```
 
 ### Acknowledgments
