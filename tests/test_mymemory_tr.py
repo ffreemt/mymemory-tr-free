@@ -1,4 +1,7 @@
 ''' dummy test '''
+
+from logzero import logger
+
 from mymemory_tr import __version__, MymemoryTr
 
 
@@ -11,6 +14,9 @@ def test_instance_de():
     ''' test_instance_de '''
     mymemory_tr = MymemoryTr(to_lang='de').translate
     res = mymemory_tr('Test this and that and more')
+
+    logger.info('res: %s', res)
+
     _ = ['testen', 'sie', 'und', 'das', 'mehr']
     assert all(map(lambda elm: elm in res.lower(), _))
 

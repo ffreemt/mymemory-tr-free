@@ -7,6 +7,8 @@ mymemory MAX ALLOWED QUERY : 500 CHARS
 
 from typing import Optional
 
+from time import sleep
+from random import random
 import json
 from textwrap import wrap
 
@@ -55,6 +57,7 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
             debug: bool = False,
             proxy: Optional[str] = None,
             testurl: str = '',
+            retry: int = 2,
     ) -> None:
         '''
         testurl: if not empty, used as dest url (to substitute api_url for testing proxy)
@@ -69,6 +72,7 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
 
         self.proxy = proxy
         self.testurl = testurl
+        self.retry = retry
 
         _ = make_url(proxy)
         proxies = {
@@ -105,7 +109,7 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
         else:
             self.to_lang_ = to_lang
 
-        if from_lang == to_lang:
+        if self.to_lang_ == self.from_lang_:
             return source
 
         # self.source_list = wrap(source, 1000, replace_whitespace=False)
@@ -144,7 +148,20 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
             source: str,
             proxy: Optional[str] = None,
     ) -> str:
-        json5 = self._get_json5(source, proxy=proxy)
+
+        count = 0
+        while 1:
+            try:
+                json5 = self._get_json5(source, proxy=proxy)
+                break
+            except Exception as exc:
+                count += 1
+                if count > 2:
+                    break
+                sleep_ = 0.5 + random()
+                logger.info('sleeping: %.2f s, retry: %s', sleep_, count)
+                sleep(sleep_)
+
         try:
             # data = res.json()  # httpx.get(url)
             data = json.loads(json5)
@@ -258,7 +275,7 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
         return out
 
 
-def main(defvals=None):
+def main(defvals=None):  # pragma: no cover
     ''' main '''
     import argparse
     import sys
@@ -335,7 +352,7 @@ def main(defvals=None):
 
 # get_ipython is defined in ipython session
 # cut and paste wont run main()
-if __name__ == "__main__" and not globals().get('get_ipython'):
+if __name__ == "__main__" and not globals().get('get_ipython'):  # pragma: no cover
     # python mymemory.py 生成最新的神经机器翻译（NMT）系统。 -f zh -t en -d 1
 
     # python mymemory.py abc -u http://173.82.240.230:5000 -d=1 -p http://127.0.0.1:8889
