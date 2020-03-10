@@ -5,8 +5,8 @@ import re
 
 from setuptools import setup, find_packages
 
-name = """memory-tr-free"""
-description = 'translate for free with async and proxy support'
+name = """mymemory-tr-free"""
+description = 'mymemory translate for free with proxy support'
 dir_name, *_ = find_packages()
 # dir_name = 'mymemory_tr'
 curr_dir = Path(__file__).parent

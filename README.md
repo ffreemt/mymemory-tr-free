@@ -3,7 +3,7 @@ translate for free with proxy support
 
 ### Installation
 Not available yet
-```pip install memory-tr-free```
+```pip install mymemory-tr-free```
 
 Validate installation
 ```
