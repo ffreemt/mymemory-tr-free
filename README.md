@@ -1,4 +1,4 @@
-# memory-tr-free ![Python package](https://github.com/ffreemt/memory-tr-free/workflows/Python3.6|3.7%20package/badge.svg) [![codecov](https://codecov.io/gh/ffreemt/memory-tr-free/branch/master/graph/badge.svg)](https://codecov.io/gh/ffreemt/memory-tr-free)
+# memory-tr-free ![Python3.6|3.7 package](https://github.com/ffreemt/mymemory-tr-free/workflows/Python3.6%7C3.7%20package/badge.svg)[![codecov](https://codecov.io/gh/ffreemt/memory-tr-free/branch/master/graph/badge.svg)](https://codecov.io/gh/ffreemt/memory-tr-free)
 translate for free with async and proxy support
 
 ### Installation
