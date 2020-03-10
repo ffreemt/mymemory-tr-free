@@ -1,5 +1,6 @@
-# mymemory-tr-free ![Python3.6|3.7 package](https://github.com/ffreemt/mymemory-tr-free/workflows/Python3.6%7C3.7%20package/badge.svg)[![codecov](https://codecov.io/gh/ffreemt/memory-tr-free/branch/master/graph/badge.svg)](https://codecov.io/gh/ffreemt/memory-tr-free)[![PyPI version](https://badge.fury.io/py/mymemory-tr-free.svg)](https://badge.fury.io/py/mymemory-tr-free)
-translate for free with proxy support
+# mymemory-tr-free ![Python3.6|3.7 package](https://github.com/ffreemt/mymemory-tr-free/workflows/Python3.6%7C3.7%20package/badge.svg)[![codecov](https://codecov.io/gh/ffreemt/mymemory-tr-free/branch/master/graph/badge.svg)](https://codecov.io/gh/ffreemt/mymemory-tr-free)[![PyPI version](https://badge.fury.io/py/mymemory-tr-free.svg)](https://badge.fury.io/py/mymemory-tr-free)
+
+mymemory translate for free with proxy support
 
 Daily quota: 10000 chars for a single IP; use a proxy to another 10000
 
