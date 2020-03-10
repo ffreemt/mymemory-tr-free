@@ -62,6 +62,11 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
         self.from_lang = from_lang
         self.to_lang = to_lang
         # self.source_list = ['']
+
+        # for use in _get_json5
+        self.from_lang_ = from_lang
+        self.to_lang_ = to_lang
+
         self.proxy = proxy
         self.testurl = testurl
 
@@ -92,9 +97,13 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
         '''
 
         if from_lang is None:
-            from_lang = self.from_lang
+            self.from_lang_ = self.from_lang
+        else:
+            self.from_lang_ = from_lang
         if to_lang is None:
-            to_lang = self.to_lang
+            self.to_lang_ = self.to_lang
+        else:
+            self.to_lang_ = to_lang
 
         if from_lang == to_lang:
             return source
@@ -204,7 +213,7 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
         # +"&sl=%s&tl=%s&text=%s" % (self.from_lang, self.to_lang, escaped_source)
         # , headers = headers)
 
-        url = api_url.format(escaped_source, self.from_lang, self.to_lang, emailaddy)
+        url = api_url.format(escaped_source, self.from_lang_, self.to_lang_, emailaddy)
 
         if self.testurl:
             url = self.testurl
@@ -238,7 +247,6 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
 
             logger.debug('out: %s', out)
             logger.debug('headers: %s', res.headers)
-
         except Exception as exc:
             logger.error('%s', exc)
             out = str(exc)

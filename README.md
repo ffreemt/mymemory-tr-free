@@ -33,10 +33,15 @@ mymemory_tr = MymemoryTr().translate
 proxy = 'http://127.0.0.1:8888'
 mymemory_tr('test this and that', proxy=proxy)
 
-# source and destination can be identifid by RFC3066 (ISO 639-1)
+# source and destination can be identified by RFC3066 (ISO 639-1)
 mymemory_tr = MymemoryTr(to_lang='de').translate
 mymemory_tr('Test this and that and more')
 # 'Testen Sie dieses und das und mehr'
+
+# source and destination can be overriden per request
+mymemory_tr = MymemoryTr(to_lang='de').translate
+mymemory_tr('Test this and that and more', to_lang='fr')
+# 'Testez ceci et cela et plus encore'
 
 ```
 
