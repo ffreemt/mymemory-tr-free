@@ -1,12 +1,12 @@
 ''' sanity check
 '''
-import pytest
+# import pytest
 
-from mymemory_tr import mymemory_tr
+from mymemory_tr import MymemoryTr
 
 
-@pytest.mark.asyncio
-async def test_sanity():
+def test_sanity():
     ''' sanity check '''
-    await mymemory_tr()
+    translate = MymemoryTr().translate
+    del translate
     assert 1

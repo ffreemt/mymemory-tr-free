@@ -44,6 +44,7 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
     >>> translate('China')
     '中国'
     '''
+    # pylint: disable=too-many-arguments
     def __init__(self, to_lang='zh', from_lang='en', debug=False, proxy=None, testurl=''):
         '''
         testurl: if not empty, is used as dest url (substitute api_url)
@@ -51,12 +52,13 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
         self.from_lang = from_lang
         self.to_lang = to_lang
         # self.source_list = ['']
-
+        self.proxy = proxy
         self.testurl = testurl
 
+        _ = make_url(proxy)
         proxies = {
-            'http': makeu_url(proxy),
-            'https': makeu_url(proxy),
+            'http': _,
+            'https': _,
         }
         self.client = httpx.Client(proxies=proxies)
 
@@ -94,7 +96,8 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
         #  MAX ALLOWED QUERY : 500 bytes/CHARS
 
         try:
-            seq = ' '.join(self._get_translation(s, proxy=proxy) for s in source_list)
+            _ = (self._get_translation(elm, proxy=proxy) for elm in source_list)
+            seq = ' '.join(_)
         except Exception as exc:
             logger.warning(" seq = ' '.join, exc %s ", exc)
             # return None
@@ -121,8 +124,8 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
 
             # data = {'error': str(json5)}
             logger.error('returned: %s', json5)
-
-            return None
+            raise
+            # return None
 
         translation = data['responseData']['translatedText']
         if not isinstance(translation, bool):
@@ -192,26 +195,34 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
         # create a new client if proxy not equalt to self.proxy
         if proxy == self.proxy:
             client = self.client
+            use_local = False
         else:
             proxies = {
                 'http': proxy,
                 'https': proxy,
             }
             client = httpx.Client(proxies=proxies)
+            use_local = True
 
-        logger.debug('proxies: %s', proxies)
+            logger.debug('proxies: %s', proxies)
+
         try:
-            with httpx.Client(proxies=proxies, trust_env=False) as client:
-                # res = httpx.get(url)
-                res = client.get(url)
-                out = res.text
+            # with httpx.Client(proxies=proxies, trust_env=False) as client:
+            # res = httpx.get(url)
+            res = client.get(url)
+            out = res.text
 
-                logger.debug('out: %s', out)
-                logger.debug('headers: %s', res.headers)
+            logger.debug('out: %s', out)
+            logger.debug('headers: %s', res.headers)
 
         except Exception as exc:
             logger.error('%s', exc)
             out = str(exc)
+        finally:
+            # close the local client if created
+            if use_local:
+                client.close()
+
         return out
 
 
