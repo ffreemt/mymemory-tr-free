@@ -1,0 +1,29 @@
+#
+REM run find-and-replace.bat
+REM modify ffreemt/mymemory-tr-free.git in run-init
+REM run run-rg.bat
+REM run run-init.bat
+
+git init
+git add -A
+git commit -m "first commit"
+git remote add origin git@github.com:ffreemt/mymemory-tr-free.git
+git push -u origin master
+
+REM …or push an existing repository from the command line
+REM git remote add origin git@github.com:ffreemt/freemt_utils.git
+REM git push -u origin master
+
+echo login to https://codecov.io/gh/ffreemt/+
+echo or https://codecov.io/gh/ffreemt/mymemory-tr-free
+echo copy
+echo https://github.com/ffreemt/mymemory-tr-free/settings/secrets/
+echo.
+echo badges
+echo https://codecov.io/gh/ffreemt/mymemory-tr-free/settings/badge
+echo.
+echo goto https://github.com/ffreemt/mymemory-tr-free/actions click "Create status badge"
+echo.
+echo pypi badge https://badge.fury.io/for/py
+echo refer to freemt-utils
+pause
