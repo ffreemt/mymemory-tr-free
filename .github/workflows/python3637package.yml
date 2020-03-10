@@ -31,7 +31,7 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest
-        pip install -r requirements.txt
+        # pip install -r requirements.txt
         pytest
     - name: Build Python package
       run: |

@@ -4,6 +4,9 @@ based on mypython mymemory.py
 
 mymemory MAX ALLOWED QUERY : 500 CHARS
 '''
+
+from typing import Optional
+
 import json
 from textwrap import wrap
 
@@ -45,9 +48,16 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
     '中国'
     '''
     # pylint: disable=too-many-arguments
-    def __init__(self, to_lang='zh', from_lang='en', debug=False, proxy=None, testurl=''):
+    def __init__(
+            self,
+            to_lang: str = 'zh',
+            from_lang: str = 'en',
+            debug: bool = False,
+            proxy: Optional[str] = None,
+            testurl: str = '',
+    ) -> None:
         '''
-        testurl: if not empty, is used as dest url (substitute api_url)
+        testurl: if not empty, used as dest url (to substitute api_url for testing proxy)
         '''
         self.from_lang = from_lang
         self.to_lang = to_lang
@@ -68,7 +78,13 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
             logzero.loglevel(20)
 
     # def mymemory(self, source):
-    def translate(self, source, from_lang=None, to_lang=None, proxy=None):
+    def translate(
+            self,
+            source: str,
+            from_lang: Optional[str] = None,
+            to_lang: Optional[str] = None,
+            proxy: Optional[str] = None,
+    ) -> str:
         '''
         if from_lang to_lang: None, use instance's
 
@@ -114,7 +130,11 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
 
         return seq
 
-    def _get_translation(self, source, proxy=None):
+    def _get_translation(
+            self,
+            source: str,
+            proxy: Optional[str] = None,
+    ) -> str:
         json5 = self._get_json5(source, proxy=proxy)
         try:
             # data = res.json()  # httpx.get(url)
@@ -142,7 +162,11 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
 
         return next_best_match
 
-    def _get_json5(self, source, proxy=None):
+    def _get_json5(
+            self,
+            source: str,
+            proxy: Optional[str] = None,
+    ) -> str:
         escaped_source = quote(source, '')
 
         # http://api.mymemory.translated.net/get?q=Hello%20World!&langpair=en|zh
