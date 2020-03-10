@@ -7,7 +7,7 @@ from mymemory_tr import __version__, MymemoryTr
 
 def test_version():
     ''' test versioin '''
-    assert __version__ == '0.0.1'
+    assert __version__[:4] == '0.0.'
 
 
 def test_instance_de():

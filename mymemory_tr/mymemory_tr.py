@@ -154,7 +154,7 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
             try:
                 json5 = self._get_json5(source, proxy=proxy)
                 break
-            except Exception as exc:
+            except Exception:  # pragma: no cover
                 count += 1
                 if count > 2:
                     break
@@ -177,16 +177,17 @@ class MymemoryTr:  # pylint: disable=too-few-public-methods
         if not isinstance(translation, bool):
             return translation
 
-        matches = data['matches']
-        for match in matches:
-            if not isinstance(match['translation'], bool):
-                next_best_match = match['translation']
-                break
-        else:
-            logger.warning('for ... else...raise')
-            raise Exception('Unable to find a match')
+        if 1:  # pragma: no cover
+            matches = data['matches']
+            for match in matches:
+                if not isinstance(match['translation'], bool):
+                    next_best_match = match['translation']
+                    break
+            else:
+                logger.warning('for ... else...raise')
+                raise Exception('Unable to find a match')
 
-        return next_best_match
+            return next_best_match
 
     def _get_json5(
             self,
